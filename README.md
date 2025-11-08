@@ -1,3 +1,8 @@
+本仓库为 Halo 主题 Sakura 的代码，基于 Sakura 2.4.3 版本开发.添加了一些个人喜欢的元素并修改了一些问题
+
+
+以下为原仓库说明:
+
 <h1 align="center">Sakura<img src="https://media.giphy.com/media/mGcNjsfWAjY5AEZNw6/giphy.gif" width="50"></h1>
 <p align="center">
   <a href="https://github.com/halo-dev/halo"><img alt="Halo version" src="https://img.shields.io/badge/halo-2.17.0%2B-brightgreen?style=for-the-badge" /></a>
