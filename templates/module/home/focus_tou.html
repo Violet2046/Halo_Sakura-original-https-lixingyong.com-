@@ -24,6 +24,7 @@
       th:if="${not #strings.isEmpty(theme.config.mainScreen.glitch_text)}"
       class="center-text glitch"
       th:attr="data-text=${theme.config.mainScreen.glitch_text}"
+      th:style="|--focus-title-font-size: ${theme.config.mainScreen.focus_title_font_size ?: '5rem'}; --focus-title-font-family: ${theme.config.mainScreen.focus_title_font_family ?: 'Ubuntu, sans-serif'};|"
       th:text="${theme.config.mainScreen.glitch_text}"
     ></h1>
   </th:block>

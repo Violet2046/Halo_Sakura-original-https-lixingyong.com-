@@ -6,71 +6,153 @@ export default class Index {
    */
   @documentFunction()
   public registerRealtimeClock() {
-    const clockElement = document.querySelector(".realtime-clock") as HTMLDivElement;
-    if (!clockElement) {
+    const fallbackWeekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    let initialized = false;
+    let observer: MutationObserver | null = null;
+    let domReadyHandler: (() => void) | null = null;
+    let timerId: number | null = null;
+
+    const normalizeWeekDays = (rawWeekDays: unknown): string[] => {
+      if (typeof rawWeekDays === "string") {
+        const parts = rawWeekDays.split(",").map((item) => item.trim()).filter(Boolean);
+        if (parts.length >= fallbackWeekDays.length) {
+          return parts.slice(0, fallbackWeekDays.length);
+        }
+      }
+      return fallbackWeekDays;
+    };
+
+    const startClock = (clockElement: HTMLDivElement) => {
+      if (initialized) {
+        return true;
+      }
+      initialized = true;
+
+      const updateClock = () => {
+        const format = clockElement.getAttribute("data-format") || "datetime";
+        const use12Hour = clockElement.getAttribute("data-use-12hour") === "true";
+        const weekDays = normalizeWeekDays(
+          sakura.translate("home.clock.weekdays", fallbackWeekDays.join(","))
+        );
+
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, "0");
+        const day = String(now.getDate()).padStart(2, "0");
+        let hours = now.getHours();
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        const seconds = String(now.getSeconds()).padStart(2, "0");
+        const weekDay = weekDays[now.getDay()] || fallbackWeekDays[now.getDay()];
+
+        // 12小时制处理
+        let period = "";
+        if (use12Hour) {
+          period = hours >= 12 ? " PM" : " AM";
+          hours = hours % 12 || 12;
+        }
+        const hoursStr = String(hours).padStart(2, "0");
+
+        let timeString = "";
+        switch (format) {
+          case "time":
+            timeString = `${hoursStr}:${minutes}:${seconds}${period}`;
+            break;
+          case "date":
+            timeString = `${year}-${month}-${day}`;
+            break;
+          case "datetime":
+            timeString = `${year}-${month}-${day} ${hoursStr}:${minutes}:${seconds}${period}`;
+            break;
+          case "datetime_week":
+            // 根据语言判断格式
+            const lang = document.documentElement.lang || "zh";
+            if (lang.startsWith("zh")) {
+              timeString = `${year}-${month}-${day} 星期${weekDay} ${hoursStr}:${minutes}:${seconds}${period}`;
+            } else {
+              timeString = `${year}-${month}-${day} ${weekDay} ${hoursStr}:${minutes}:${seconds}${period}`;
+            }
+            break;
+          default:
+            timeString = `${year}-${month}-${day} ${hoursStr}:${minutes}:${seconds}${period}`;
+        }
+
+        // 更新元素内容和 data-text 属性（用于故障效果）
+        clockElement.textContent = timeString;
+        clockElement.setAttribute("data-text", timeString);
+      };
+
+      // 立即更新一次并启动定时器
+      updateClock();
+      timerId = window.setInterval(updateClock, 1000);
+
+      const cleanup = () => {
+        if (timerId !== null) {
+          window.clearInterval(timerId);
+          timerId = null;
+        }
+        window.removeEventListener("sakura:refresh", cleanup);
+      };
+
+      window.addEventListener("sakura:refresh", cleanup, { once: true });
+      return true;
+    };
+
+    const tryInitialize = () => {
+      if (initialized) {
+        return true;
+      }
+      const element = document.querySelector(".realtime-clock-glitch") as HTMLDivElement | null;
+      if (!element) {
+        return false;
+      }
+      const started = startClock(element);
+      if (started && observer) {
+        observer.disconnect();
+        observer = null;
+      }
+      if (started && domReadyHandler) {
+        document.removeEventListener("DOMContentLoaded", domReadyHandler);
+        domReadyHandler = null;
+      }
+      return started;
+    };
+
+    if (tryInitialize()) {
       return;
     }
 
-    const clockTextElement = clockElement.querySelector(".clock-text") as HTMLSpanElement;
-    const format = clockElement.getAttribute("data-format") || "datetime";
-    const use12Hour = clockElement.getAttribute("data-use-12hour") === "true";
-
-    // 从国际化文件获取星期几的翻译，如果没有则使用默认值
-    const weekDaysTranslation = sakura.translate("home.clock.weekdays", "Sun,Mon,Tue,Wed,Thu,Fri,Sat");
-    const weekDays = typeof weekDaysTranslation === "string" 
-      ? weekDaysTranslation.split(",") 
-      : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-    const updateClock = () => {
-      const now = new Date();
-      let timeString = "";
-
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, "0");
-      const day = String(now.getDate()).padStart(2, "0");
-      let hours = now.getHours();
-      const minutes = String(now.getMinutes()).padStart(2, "0");
-      const seconds = String(now.getSeconds()).padStart(2, "0");
-      const weekDay = weekDays[now.getDay()];
-
-      // 12小时制处理
-      let period = "";
-      if (use12Hour) {
-        period = hours >= 12 ? " PM" : " AM";
-        hours = hours % 12 || 12;
+    domReadyHandler = () => {
+      if (tryInitialize()) {
+        domReadyHandler = null;
       }
-      const hoursStr = String(hours).padStart(2, "0");
-
-      switch (format) {
-        case "time":
-          timeString = `${hoursStr}:${minutes}:${seconds}${period}`;
-          break;
-        case "date":
-          timeString = `${year}-${month}-${day}`;
-          break;
-        case "datetime":
-          timeString = `${year}-${month}-${day} ${hoursStr}:${minutes}:${seconds}${period}`;
-          break;
-        case "datetime_week":
-          // 根据语言判断格式
-          const lang = document.documentElement.lang || "zh";
-          if (lang.startsWith("zh")) {
-            timeString = `${year}-${month}-${day} 星期${weekDay} ${hoursStr}:${minutes}:${seconds}${period}`;
-          } else {
-            timeString = `${year}-${month}-${day} ${weekDay} ${hoursStr}:${minutes}:${seconds}${period}`;
-          }
-          break;
-        default:
-          timeString = `${year}-${month}-${day} ${hoursStr}:${minutes}:${seconds}${period}`;
-      }
-
-      clockTextElement.textContent = timeString;
     };
 
-    // 立即更新一次
-    updateClock();
-    // 每秒更新
-    setInterval(updateClock, 1000);
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", domReadyHandler, { once: true });
+    } else {
+      domReadyHandler();
+    }
+
+    if (initialized) {
+      return;
+    }
+
+    observer = new MutationObserver(() => {
+      if (tryInitialize()) {
+        observer?.disconnect();
+        observer = null;
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // 兜底，避免观察器长期存在
+    window.setTimeout(() => {
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+    }, 10000);
   }
 
   /**

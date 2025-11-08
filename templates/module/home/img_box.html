@@ -34,23 +34,24 @@
 
   <div class="focusinfo">
     <th:block th:replace="~{module/home/focus_tou}"></th:block>
+    <!-- 实时时间显示 - 放在故障文本下方 -->
+    <div
+      class="realtime-clock-glitch center-text glitch"
+      th:if="${theme.config.mainScreen.focus_info_realtime_clock}"
+      th:attr="
+        data-format=${theme.config.mainScreen.focus_info_clock_format ?: 'datetime'},
+        data-use-12hour=${theme.config.mainScreen.focus_info_clock_use_12hour ?: false}
+      "
+      th:style="|--focus-clock-font-size: ${theme.config.mainScreen.focus_clock_font_size ?: '2.5rem'}; --focus-clock-font-family: ${theme.config.mainScreen.focus_clock_font_family ?: 'Ubuntu, sans-serif'};|"
+      data-text="Loading..."
+    >
+      Loading...
+    </div>
     <div
       class="header-info no-select"
       th:classappend="${#strings.isEmpty(theme.config.mainScreen.focus_info_self_intro) ? 'info-desc' : ''}"
-      th:if="${theme.config.mainScreen.focus_info_self_intro or theme.config.mainScreen.focus_info_socials or theme.config.mainScreen.focus_info_realtime_clock}"
+      th:if="${theme.config.mainScreen.focus_info_self_intro or theme.config.mainScreen.focus_info_socials}"
     >
-      <!-- 实时时间显示 -->
-      <div
-        class="realtime-clock flex-child-center"
-        th:if="${theme.config.mainScreen.focus_info_realtime_clock}"
-        th:attr="
-          data-format=${theme.config.mainScreen.focus_info_clock_format ?: 'datetime'},
-          data-use-12hour=${theme.config.mainScreen.focus_info_clock_use_12hour ?: false}
-        "
-      >
-        <span class="iconify clock-icon" data-icon="fa:clock-o"></span>
-        <span class="clock-text">Loading...</span>
-      </div>
       <p
         class="flex-child-center"
         th:if="${theme.config.mainScreen.focus_info_self_intro and (not #strings.isEmpty(theme.config.mainScreen.focus_info_self_intro_text))}"

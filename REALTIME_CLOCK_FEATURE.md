@@ -8,7 +8,7 @@
 ### 1. 配置文件 (settings.yaml)
 **位置**: `settings.yaml` (第165-192行)
 
-**添加的配置项**:
+**主要配置项**:
 ```yaml
 - $formkit: checkbox
   name: focus_info_realtime_clock
@@ -43,65 +43,68 @@
   if: "$get(focus_info_realtime_clock).value == true"
   label: 使用12小时制
   value: false
+
+- $formkit: text
+  name: focus_title_font_size
+  label: 故障文字字体大小
+  value: 5rem
+
+- $formkit: text
+  name: focus_title_font_family
+  label: 故障文字字体
+  value: Ubuntu, sans-serif
+
+- $formkit: text
+  name: focus_clock_font_size
+  label: 时间字体大小
+  value: 2.5rem
+
+- $formkit: text
+  name: focus_clock_font_family
+  label: 时间字体
+  value: Ubuntu, sans-serif
 ```
 
 ### 2. HTML 模板 (templates/module/home/img_box.html)
 **位置**: `templates/module/home/img_box.html` (第37-51行)
 
 **修改内容**:
-- 修改 `.header-info` 的显示条件，添加对 `focus_info_realtime_clock` 的检查
-- 在个人介绍之前添加实时时钟显示元素
+- 将时钟从 `.header-info` 中独立出来并放置在故障文字下方
+- 新增首屏文字与时钟字体/字号的自定义能力
 
-**新增的HTML结构**:
+**更新后的 HTML 结构**:
 ```html
 <div
-  class="realtime-clock flex-child-center"
+  class="realtime-clock-glitch center-text glitch"
   th:if="${theme.config.mainScreen.focus_info_realtime_clock}"
   th:attr="
     data-format=${theme.config.mainScreen.focus_info_clock_format ?: 'datetime'},
     data-use-12hour=${theme.config.mainScreen.focus_info_clock_use_12hour ?: false}
   "
+  th:style="|--focus-clock-font-size: ${theme.config.mainScreen.focus_clock_font_size ?: '2.5rem'}; --focus-clock-font-family: ${theme.config.mainScreen.focus_clock_font_family ?: 'Ubuntu, sans-serif'};|"
+  data-text="Loading..."
 >
-  <span class="iconify clock-icon" data-icon="fa:clock-o"></span>
-  <span class="clock-text">Loading...</span>
+  Loading...
 </div>
 ```
 
-### 3. CSS 样式 (src/css/common/components/screen/img-box/info.css)
-**位置**: `src/css/common/components/screen/img-box/info.css` (第38-61行)
+### 3. CSS 样式 (src/css/common/components/screen/img-box/focus-tou.css)
+**位置**: `src/css/common/components/screen/img-box/focus-tou.css`
 
-**添加的样式**:
+**关键样式**:
 ```css
-/* 实时时钟样式 */
-& .realtime-clock {
-  margin: 0.5rem 0;
-  padding: 0.5rem 0;
-  font-family: "Ubuntu", "Courier New", monospace, sans-serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-
-  & .clock-icon {
-    margin-right: 0.5rem;
-    font-size: 1.2em;
-    animation: clockRotate 2s linear infinite;
-  }
-
-  & .clock-text {
-    font-variant-numeric: tabular-nums;
-    min-width: 200px;
-    display: inline-block;
-    text-align: left;
-  }
+.center-text {
+  font-family: var(--focus-title-font-family, "Ubuntu", sans-serif);
+  font-size: var(--focus-title-font-size, 5rem);
 }
 
-@keyframes clockRotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
+.realtime-clock-glitch {
+  font-family: var(--focus-clock-font-family, "Ubuntu", sans-serif);
+  font-size: var(--focus-clock-font-size, 2.5rem);
+  font-variant-numeric: tabular-nums;
+
+  @mixin screens-md {
+    font-size: var(--focus-clock-font-size-mobile, 1.5rem);
   }
 }
 ```

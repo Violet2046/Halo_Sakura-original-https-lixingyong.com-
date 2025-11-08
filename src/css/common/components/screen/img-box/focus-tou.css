@@ -14,9 +14,38 @@
 
 .center-text {
   margin: 0;
-  font-family: "Ubuntu", sans-serif;
-  font-size: 5rem;
+  font-family: var(--focus-title-font-family, "Ubuntu", sans-serif);
+  font-size: var(--focus-title-font-size, 5rem);
   transition: background 1s;
+}
+
+/* 实时时钟 - 故障文本样式 */
+.realtime-clock-glitch {
+  margin-top: 2rem;
+  font-size: var(--focus-clock-font-size, 2.5rem);
+  font-family: var(--focus-clock-font-family, "Ubuntu", sans-serif);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 2px;
+  
+  /* 鼠标悬停时触发故障效果 */
+  &:hover {
+    &::before {
+      text-shadow: 4px 0 #ff3b00;
+      animation: glitch-loop-1 0.8s infinite ease-in-out alternate-reverse;
+    }
+
+    &::after {
+      text-shadow: -5px 0 #00a1d6;
+      animation: glitch-loop-2 0.8s infinite ease-in-out alternate-reverse;
+    }
+  }
+
+  /* 移动端适配 */
+  @mixin screens-md {
+    font-size: var(--focus-clock-font-size-mobile, 1.5rem);
+    margin-top: 1rem;
+    letter-spacing: 1px;
+  }
 }
 
 .glitch {

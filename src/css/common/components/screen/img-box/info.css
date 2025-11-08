@@ -38,37 +38,4 @@
     word-break: keep-all;
     display: inline;
   }
-
-  /* 实时时钟样式 */
-  & .realtime-clock {
-    margin: 0.5rem 0;
-    padding: 0.5rem 0;
-    font-family: "Ubuntu", "Courier New", monospace, sans-serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-
-    & .clock-icon {
-      margin-right: 0.5rem;
-      font-size: 1.2em;
-      animation: clockRotate 2s linear infinite;
-    }
-
-    & .clock-text {
-      font-variant-numeric: tabular-nums;
-      min-width: 200px;
-      display: inline-block;
-      text-align: left;
-    }
-  }
-}
-
-@keyframes clockRotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }
