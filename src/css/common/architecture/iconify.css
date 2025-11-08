@@ -1,0 +1,24 @@
+.iconify {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  font-size: 1em;
+  height: 1em;
+  width: 1em;
+
+  &.iconify--small {
+    font-size: 0.875em;
+  }
+
+  &.iconify--large {
+    font-size: 1.25em;
+  }
+
+  &.iconify--xlarge {
+    font-size: 1.5em;
+  }
+
+  &.iconify--xxlarge {
+    font-size: 2em;
+  }
+}

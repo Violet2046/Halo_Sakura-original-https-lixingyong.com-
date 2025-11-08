@@ -1,0 +1,175 @@
+:root {
+  /* 主题色 */
+  --theme-color: orange;
+  /* 主题亮度 */
+  --theme-brightness: 1;
+
+  /* layout - content */
+  --site-content-max-width: 780px;
+  --site-content-background-color: rgba(255, 255, 255, 0.8);
+
+  /* 加载图 */
+  --loading-image: none;
+
+  /* 鼠标样式 */
+  --cursor-link: pointer;
+  --cursor-link-active: inherit;
+  --cursor-text: inherit;
+  --cursor-normal: inherit;
+  --cursor-hover: inherit;
+
+  /* 回到顶部 */
+  --cd-top-image: none no-repeat center;
+  --cd-top-display: block;
+  --mobile-cd-top-display: none;
+  --mobile-cd-top-bottom: 70px;
+
+  /* 标准文章列表 */
+  --standard-post-list-border-radius: 0;
+
+  /* 第一屏 */
+  --first-screen-height: 100vh;
+  --first-screen-after: none;
+  --first-screen-filter-images: none;
+  --first-screen-background-blend-overlay: none;
+  --first-screen-header-info-text-color: #eaeadf;
+  --first-screen-header-info-background-color: rgba(0, 0, 0, 0.5);
+
+  /* header */
+  --header-height: 4.6875rem;
+  --yya-header-top: 0;
+  --header-background: #47cccc;
+
+  --body-color: #464646;
+  --color: #666;
+  --background-color: #fff;
+  --header-user-option-hover-background-color: #47cccc;
+
+  /* 公告通知 */
+  --notice-background-color: #fbfbfb50;
+
+  /* 首页分割线 */
+  --home-divider-border: 1px dashed #eee;
+
+  /* 文章列表 */
+  --post-list-thumb-box-shadow: 0 1px 20px -6px rgba(0, 0, 0, 0.5);
+  --post-list-thumb-title-color: #504e4e;
+  --post-list-thumb-meta-color: #505050;
+  --post-list-thumb-abstract-color: rgba(0, 0, 0, 0.66);
+  --post-list-thumb-more-color: #666;
+
+  /* 小工具控件 */
+  --widget-background-color: #fff;
+  --theme-item-background-color: #fff;
+
+  /* 移动端控件 */
+  --mobile-nav-toggle-background-color: var(--theme-color);
+  --mobile-menu-text-color: #333;
+  --mobile-search-background-color: #fafafa;
+
+  /* minicode */
+  --minicode-color: #000;
+
+  /* 内容主体 */
+  --entry-content-text-color: #7d7d7d;
+  --entry-content-heading-color: #000;
+  --entry-content-list-color: #666;
+  --entry-content-table-color: #000;
+  --entry-content-pre-white-space: var(--pre-white-space, pre);
+
+  /* card */
+  --card-container-box-shadow: 0 -15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+  --card-container-title-color: #34495e;
+
+  /* photo */
+  --photo-group-change-color: #ccc;
+  --photo-group-change-active-color: #222;
+
+  /* links */
+  --links-description-color: #999;
+}
+
+.dark {
+  --theme-brightness: 0.7;
+  --body-color: #eee;
+  --header-background: #47cccc;
+  --header-user-option-hover-background-color: #47cccc;
+  --color: #eee;
+  --background-color: #2728298d;
+  --first-screen-background-blend-overlay: var(--background-color);
+  --first-screen-header-info-text-color: #fff;
+  --first-screen-header-info-background-color: rgba(0, 0, 0, 0.7);
+  --notice-background-color: #222;
+  --home-divider-border: 6px dotted #535a63;
+  --post-list-thumb-box-shadow: 0 1px 35px -8px rgba(0, 0, 0, 0.8);
+  --post-list-thumb-title-color: #b0b0b0;
+  --post-list-thumb-meta-color: #888;
+  --post-list-thumb-abstract-color: #b0b0b0;
+  --post-list-thumb-more-color: #888;
+  --widget-background-color: rgba(38, 38, 38, 0.8);
+  --theme-item-background-color: #31363b;
+  --mobile-menu-text-color: #eee;
+  --mobile-search-background-color: #303339;
+  --entry-content-heading-color: #ccc;
+  --entry-content-text-color: #ffffffcc;
+  --entry-content-list-color: #ffffffcc;
+  --entry-content-table-color: #ffffffcc;
+  --card-container-box-shadow: 0 1px 35px -8px rgba(0, 0, 0, 0.8);
+  --card-container-title-color: #ccc;
+  --photo-group-change-color: #4f4f4f;
+  --photo-group-change-active-color: #ccc;
+  --links-description-color: #b0b0b0;
+  --site-content-background-color: rgba(36, 36, 36, 0.746);
+}
+
+.video-container {
+  --video-play-image: none;
+  --video-pause-image: none;
+}
+
+.search-form {
+  --search-form-image: none;
+}
+
+/* 临时增强：当 body 带有 dark 类时，强制站点内容和页脚背景更不透明，避免背景图/壁纸导致的可读性问题。
+   这是一处低风险的增强，建议在确认无误后通过构建将其写入编译产物（templates/assets/dist/css/...）。 */
+body.dark {
+  /* 保持背景图片，只是添加深色背景色作为基础 */
+  background-color: #232629c3 !important;
+  /* 不移除背景图片，让背景图片继续显示 */
+}
+
+/* 在黑夜模式下，为整个页面添加半透明黑色蒙层叠加在背景图上 */
+body.dark::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 确保内容区域在蒙层上方 */
+body.dark .site-content,
+body.dark .site-footer {
+  background-color: rgba(38, 38, 38, 0.95) !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* 确保头部、主容器等也在蒙层上方 */
+body.dark .site-header,
+body.dark .header-inner,
+body.dark .main,
+body.dark .container {
+  position: relative;
+  z-index: 1;
+}
+
+body.dark .header-inner,
+body.dark .site-header {
+  background: #47cccc !important;
+}

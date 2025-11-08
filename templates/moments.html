@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{layout :: layout(_title = ~{::title}, _header = ~{::header}, _content = ~{::content})}"
+>
+  <th:block th:fragment="title">
+    <th:block th:text="${title} + '|' + ${site.title}"></th:block>
+  </th:block>
+
+  <th:block th:fragment="header">
+    <th:block
+      th:replace="~{macro/page-header :: page-header(extension=${moments}, frontCover=${theme.config.patternimg.journals_patternimg}, headerTitle = ~{::headerTitle}, id='moments', isRandomImage=true)}"
+    />
+  </th:block>
+
+  <th:block th:fragment="headerTitle">
+    <h1 th:text="${title}"></h1>
+  </th:block>
+
+  <th:block th:fragment="content">
+    <div class="moments-container">
+      <ul th:if="${moments.total gt 0}" class="moments-inner">
+        <li class="moments-item journal" th:each="moment : ${moments.items}" th:data-name="${moment.metadata.name}">
+          <th:block th:insert="~{moment :: content(${moment})}" />
+        </li>
+      </ul>
+      <th:block th:if="${moments.totalPages gt 1}">
+        <div th:if="${moments.hasNext}" id="moment-list-pagination" class="pagination">
+          <a
+            th:href="@{${moments.nextUrl}}"
+            class="at_button"
+            data-i18n="page.moments.loadmore"
+            aria-label="get the next moment"
+          ></a>
+        </div>
+      </th:block>
+      <th:block th:unless="${moments.total gt 0}">
+        <span data-i18n="page.moments.empty"></span>
+      </th:block>
+    </div>
+  </th:block>
+</html>

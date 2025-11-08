@@ -1,0 +1,74 @@
+.header-info {
+  max-width: 30%;
+  position: relative;
+  margin: 0;
+  font-size: 1rem;
+  color: var(--first-screen-header-info-text-color);
+  background: var(--first-screen-header-info-background-color);
+  padding: 1rem;
+  letter-spacing: 0;
+  line-height: 2rem;
+  border-radius: 10px;
+  box-sizing: initial;
+  white-space: nowrap;
+  margin-top: 1.25rem;
+
+  &::before {
+    position: absolute;
+    left: 30%;
+    border-width: 15px;
+    border-style: solid;
+    border-color: transparent;
+    border-bottom-color: var(--first-screen-header-info-background-color);
+  }
+
+  & p {
+    margin: 0;
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 700;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: color 0.4s;
+  }
+
+  & .desc {
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: clip;
+    word-break: keep-all;
+    display: inline;
+  }
+
+  /* 实时时钟样式 */
+  & .realtime-clock {
+    margin: 0.5rem 0;
+    padding: 0.5rem 0;
+    font-family: "Ubuntu", "Courier New", monospace, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+
+    & .clock-icon {
+      margin-right: 0.5rem;
+      font-size: 1.2em;
+      animation: clockRotate 2s linear infinite;
+    }
+
+    & .clock-text {
+      font-variant-numeric: tabular-nums;
+      min-width: 200px;
+      display: inline-block;
+      text-align: left;
+    }
+  }
+}
+
+@keyframes clockRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
