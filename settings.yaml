@@ -154,17 +154,17 @@ spec:
           name: focus_title_font_size
           id: focus_title_font_size
           key: focus_title_font_size
-          if: "$get(head_focus).value == true && $get(focus_tou).value == 'glitch-text'"
+          if: "$get(head_focus).value == true"
           label: 故障文字字体大小
-          help: 支持任意合法的 CSS 字体尺寸，如 5rem、48px
+          help: 支持任意合法的 CSS 字体尺寸，如 5rem、48px（仅在头部样式为故障文字时生效）
           value: 5rem
         - $formkit: text
           name: focus_title_font_family
           id: focus_title_font_family
           key: focus_title_font_family
-          if: "$get(head_focus).value == true && $get(focus_tou).value == 'glitch-text'"
+          if: "$get(head_focus).value == true"
           label: 故障文字字体
-          help: 例如 "Ubuntu, sans-serif"，多词字体需使用引号包裹
+          help: 例如 "Ubuntu, sans-serif"，多词字体需使用引号包裹（仅在头部样式为故障文字时生效）
           value: Ubuntu, sans-serif
         - $formkit: checkbox
           name: focus_info_self_intro
@@ -219,17 +219,17 @@ spec:
           name: focus_clock_font_size
           id: focus_clock_font_size
           key: focus_clock_font_size
-          if: "$get(focus_info_realtime_clock).value == true"
+          if: "$get(head_focus).value == true"
           label: 时间字体大小
-          help: 支持任意合法的 CSS 字体尺寸，如 2.5rem、32px
+          help: 支持任意合法的 CSS 字体尺寸，如 2.5rem、32px（仅在开启实时时间时生效）
           value: 2.5rem
         - $formkit: text
           name: focus_clock_font_family
           id: focus_clock_font_family
           key: focus_clock_font_family
-          if: "$get(focus_info_realtime_clock).value == true"
+          if: "$get(head_focus).value == true"
           label: 时间字体
-          help: 例如 "Ubuntu, sans-serif"，多词字体需使用引号包裹
+          help: 例如 "Ubuntu, sans-serif"，多词字体需使用引号包裹（仅在开启实时时间时生效）
           value: Ubuntu, sans-serif
         - $formkit: checkbox
           name: focus_height
