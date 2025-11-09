@@ -77,6 +77,24 @@ spec:
           name: hour12
           label: 使用 12 小时制
           value: false
+    - group: darkMode
+      label: 夜间模式
+      formSchema:
+        - $formkit: text
+          name: dark_mode_background_color
+          label: 背景基础色
+          help: 控制夜间模式下 body 背景色，支持任何合法的 CSS 颜色值（示例：#3030308e、rgba(48,48,48,0.56)）
+          value: "#3030308e"
+        - $formkit: text
+          name: dark_mode_overlay_color
+          label: 背景蒙层颜色
+          help: 覆盖背景图的半透明蒙层颜色，支持任何合法的 CSS 颜色值（示例：rgba(25,23,23,0.6)）
+          value: "rgba(25, 23, 23, 0.6)"
+        - $formkit: text
+          name: dark_mode_content_background_color
+          label: 内容区域背景颜色
+          help: 文章与页脚背景蒙层颜色，支持任何合法的 CSS 颜色值（示例：rgba(38,38,38,0.95)）
+          value: "rgba(38, 38, 38, 0.95)"
     - group: patternimg
       label: 头部装饰图
       formSchema:

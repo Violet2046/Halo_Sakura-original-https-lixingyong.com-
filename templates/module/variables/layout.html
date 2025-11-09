@@ -2,6 +2,9 @@
   :root {
     --theme-color: [(${theme.config.general.theme_skin})];
     --loading-image: url("[(${#theme.assets('/images/load/rotating-ball-o.svg')})]");
+  --dark-mode-background-color: [(${theme.config.darkMode.dark_mode_background_color ?: '#3030308e'})];
+  --dark-mode-overlay-color: [(${theme.config.darkMode.dark_mode_overlay_color ?: 'rgba(25, 23, 23, 0.6)'})];
+  --dark-mode-content-background-color: [(${theme.config.darkMode.dark_mode_content_background_color ?: 'rgba(38, 38, 38, 0.95)'})];
 
     [# th:if="${theme.config.general.cursor_skin == 'sakura'}"]
       --cursor-link: url("[(${#theme.assets('/cursor/ayuda.cur')})]"), auto;

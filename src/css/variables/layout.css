@@ -87,6 +87,11 @@
 
   /* links */
   --links-description-color: #999;
+
+  /* Dark mode overlays (defaults) */
+  --dark-mode-background-color: #3030308e;
+  --dark-mode-overlay-color: rgba(25, 23, 23, 0.6);
+  --dark-mode-content-background-color: rgba(38, 38, 38, 0.95);
 }
 
 .dark {
@@ -135,7 +140,7 @@
    这是一处低风险的增强，建议在确认无误后通过构建将其写入编译产物（templates/assets/dist/css/...）。 */
 body.dark {
   /* 保持背景图片，只是添加深色背景色作为基础 */
-  background-color: #232629c3 !important;
+  background-color: var(--dark-mode-background-color, #3030308e) !important;
   /* 不移除背景图片，让背景图片继续显示 */
 }
 
@@ -147,7 +152,7 @@ body.dark::after {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6) !important;
+  background-color: var(--dark-mode-overlay-color, rgba(25, 23, 23, 0.6)) !important;
   z-index: 0;
   pointer-events: none;
 }
@@ -155,7 +160,7 @@ body.dark::after {
 /* 确保内容区域在蒙层上方 */
 body.dark .site-content,
 body.dark .site-footer {
-  background-color: rgba(38, 38, 38, 0.95) !important;
+  background-color: var(--dark-mode-content-background-color, rgba(38, 38, 38, 0.95)) !important;
   position: relative;
   z-index: 1;
 }
