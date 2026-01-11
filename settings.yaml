@@ -272,6 +272,14 @@ spec:
           label: 快捷下滑功能
           value: true
         - $formkit: checkbox
+          name: focus_scroll_snap
+          id: focus_scroll_snap
+          key: focus_scroll_snap
+          if: "$get(head_focus).value == true && $get(focus_height).value == true"
+          label: 首屏滚动吸附效果
+          help: 开启后，下滑超过30%自动滑到内容区，否则返回首屏顶部
+          value: true
+        - $formkit: checkbox
           if: "$get(head_focus).value == true && $get(focus_height).value == true"
           name: bgvideo
           id: bgvideo
@@ -868,8 +876,8 @@ spec:
         - $formkit: checkbox
           name: enable_rain_effect
           id: enable_rain_effect
-          label: 启用动态雨滴效果
-          help: 在背景前叠加动态雨滴蒙版
+          label: 启用玻璃雨滴效果
+          help: 开启后背景将通过WebGL渲染玻璃雨滴效果；关闭则使用传统CSS背景显示
           value: false
         - $formkit: number
           name: rain_drops_count
@@ -895,8 +903,8 @@ spec:
           name: rain_glass_blur
           id: rain_glass_blur
           if: "$get(enable_rain_effect).value == true"
-          label: 玻璃模糊强度
-          help: 雨滴玻璃的背景模糊程度（0.0-1.0，0为清晰，1为模糊，建议0.2-0.4）
+          label: 玻璃折射模糊度
+          help: 透过雨滴看到的背景模糊程度（0.0=清晰可见，1.0=强烈模糊，推荐0.2-0.4）
           value: 0.3
           min: 0.0
           max: 1.0
@@ -920,7 +928,6 @@ spec:
               bg_icon: fa:television
               bg_night: false
               bg_isdefault: true
-              bg_blur: 0
               rain_glass_blur: 0.3
             - bg_name: sakura
               bg_url: /themes/theme-sakura/assets/images/themes/sakura.png
@@ -928,7 +935,6 @@ spec:
               bg_icon: fluent-emoji-high-contrast:cherry-blossom
               bg_night: false
               bg_isdefault: false
-              bg_blur: 5
               rain_glass_blur: 0.3
             - bg_name: gribs
               bg_url: /themes/theme-sakura/assets/images/themes/gribs.jpg
@@ -936,7 +942,6 @@ spec:
               bg_icon: fa:slack
               bg_night: false
               bg_isdefault: false
-              bg_blur: 5
               rain_glass_blur: 0.3
             - bg_name: KAdots
               bg_url: /themes/theme-sakura/assets/images/themes/kyotoanimation.png
@@ -944,7 +949,6 @@ spec:
               bg_icon: tabler:chart-grid-dots
               bg_night: false
               bg_isdefault: false
-              bg_blur: 5
               rain_glass_blur: 0.3
             - bg_name: totem
               bg_url: /themes/theme-sakura/assets/images/themes/little-monster.png
@@ -952,7 +956,6 @@ spec:
               bg_icon: fa:optin-monster
               bg_night: false
               bg_isdefault: false
-              bg_blur: 5
               rain_glass_blur: 0.3
             - bg_name: pixiv
               bg_url: /themes/theme-sakura/assets/images/themes/star02.png
@@ -960,7 +963,6 @@ spec:
               bg_icon: simple-icons:pixiv
               bg_night: false
               bg_isdefault: false
-              bg_blur: 5
               rain_glass_blur: 0.3
             - bg_name: bing
               bg_url: https://api.1314.cool/bingimg/
@@ -968,7 +970,6 @@ spec:
               bg_icon: jam:bing
               bg_night: false
               bg_isdefault: false
-              bg_blur: 3
               rain_glass_blur: 0.25
             - bg_name: dark
               bg_url:
@@ -976,7 +977,6 @@ spec:
               bg_icon: fa:moon-o
               bg_night: true
               bg_isdefault: false
-              bg_blur: 0
               rain_glass_blur: 0.3
           children:
             - $formkit: text
@@ -1010,17 +1010,10 @@ spec:
               help: 开启后，当前主题被选中的同时也会进入黑夜模式
               value: false
             - $formkit: number
-              name: bg_blur
-              label: 背景模糊程度
-              help: 设置背景的高斯模糊效果（0-20像素，0表示不模糊）
-              value: 0
-              min: 0
-              max: 20
-              step: 1
-            - $formkit: number
               name: rain_glass_blur
-              label: 玻璃雨滴模糊强度
-              help: 雨滴效果开启时，玻璃折射的背景模糊程度（0.0-1.0，0为清晰，1为模糊，建议0.2-0.4）
+              if: "$get(enable_rain_effect).value == true"
+              label: 玻璃折射模糊度
+              help: 仅在雨滴效果开启时有效。透过玻璃雨滴看到的背景模糊程度（0.0-1.0，推荐0.2-0.4）
               value: 0.3
               min: 0.0
               max: 1.0

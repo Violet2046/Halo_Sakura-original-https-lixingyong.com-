@@ -11,6 +11,7 @@ import LocalStorageBackend from "i18next-localstorage-backend";
 import locI18next from "loc-i18next";
 import { I18nFormat } from "./utils/i18nFormat";
 import { registerRainEffect } from "./module/rainEffect";
+import { registerScrollSnap } from "./module/scrollSnap";
 
 /* 核心启动，通常不建议也不应当由用户调用，只能由启动代码使用  */
 interface Sakura {
@@ -503,6 +504,9 @@ sakura.refresh();
 
 // 初始化雨滴效果
 registerRainEffect();
+
+// 初始化首屏滚动吸附效果
+registerScrollSnap();
 
 var functions: Set<object>;
 
