@@ -10,6 +10,7 @@ import LocalStorageBackend from "i18next-localstorage-backend";
 // @ts-ignore
 import locI18next from "loc-i18next";
 import { I18nFormat } from "./utils/i18nFormat";
+import { registerRainEffect } from "./module/rainEffect";
 
 /* 核心启动，通常不建议也不应当由用户调用，只能由启动代码使用  */
 interface Sakura {
@@ -499,6 +500,9 @@ export var sakura: Sakura = new SakuraApp(config);
 
 window.sakura = sakura;
 sakura.refresh();
+
+// 初始化雨滴效果
+registerRainEffect();
 
 var functions: Set<object>;
 

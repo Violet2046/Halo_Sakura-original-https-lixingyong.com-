@@ -43,6 +43,7 @@
     "@iconify/iconify": "^3.1.0",
     "@iconify/json": "^2.2.75",
     "@types/node": "^20.2.5",
+    "@types/three": "^0.182.0",
     "@types/video.js": "^7.3.52",
     "all-contributors-cli": "^6.26.1",
     "autoprefixer": "^10.4.14",
@@ -79,6 +80,7 @@
     "lodash.clonedeep": "^4.5.0",
     "nprogress": "^0.2.0",
     "qrcode": "^1.5.3",
+    "three": "^0.182.0",
     "tocbot": "^4.21.0",
     "video.js": "^8.3.0"
   },

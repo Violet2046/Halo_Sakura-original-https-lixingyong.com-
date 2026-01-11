@@ -92,6 +92,9 @@
   --dark-mode-background-color: #3030308e;
   --dark-mode-overlay-color: rgba(25, 23, 23, 0.6);
   --dark-mode-content-background-color: rgba(38, 38, 38, 0.95);
+  
+  /* Background blur effect */
+  --background-blur: 0px;
 }
 
 .dark {

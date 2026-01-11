@@ -866,6 +866,42 @@ spec:
       label: 主题风格
       formSchema:
         - $formkit: checkbox
+          name: enable_rain_effect
+          id: enable_rain_effect
+          label: 启用动态雨滴效果
+          help: 在背景前叠加动态雨滴蒙版
+          value: false
+        - $formkit: number
+          name: rain_drops_count
+          id: rain_drops_count
+          if: "$get(enable_rain_effect).value == true"
+          label: 雨滴数量
+          help: 屏幕上同时显示的雨滴数量（建议范围：50-200）
+          value: 100
+          min: 50
+          max: 200
+          step: 10
+        - $formkit: number
+          name: rain_speed
+          id: rain_speed
+          if: "$get(enable_rain_effect).value == true"
+          label: 雨滴速度
+          help: 雨滴下落速度（1-10，数值越大速度越快）
+          value: 5
+          min: 1
+          max: 10
+          step: 1
+        - $formkit: number
+          name: rain_glass_blur
+          id: rain_glass_blur
+          if: "$get(enable_rain_effect).value == true"
+          label: 玻璃模糊强度
+          help: 雨滴玻璃的背景模糊程度（0.0-1.0，0为清晰，1为模糊，建议0.2-0.4）
+          value: 0.3
+          min: 0.0
+          max: 1.0
+          step: 0.1
+        - $formkit: checkbox
           name: theme_change
           id: theme_change
           label: 开启主题切换
@@ -884,48 +920,64 @@ spec:
               bg_icon: fa:television
               bg_night: false
               bg_isdefault: true
+              bg_blur: 0
+              rain_glass_blur: 0.3
             - bg_name: sakura
               bg_url: /themes/theme-sakura/assets/images/themes/sakura.png
               bg_img_strategy: none
               bg_icon: fluent-emoji-high-contrast:cherry-blossom
               bg_night: false
               bg_isdefault: false
+              bg_blur: 5
+              rain_glass_blur: 0.3
             - bg_name: gribs
               bg_url: /themes/theme-sakura/assets/images/themes/gribs.jpg
               bg_img_strategy: none
               bg_icon: fa:slack
               bg_night: false
               bg_isdefault: false
+              bg_blur: 5
+              rain_glass_blur: 0.3
             - bg_name: KAdots
               bg_url: /themes/theme-sakura/assets/images/themes/kyotoanimation.png
               bg_img_strategy: none
               bg_icon: tabler:chart-grid-dots
               bg_night: false
               bg_isdefault: false
+              bg_blur: 5
+              rain_glass_blur: 0.3
             - bg_name: totem
               bg_url: /themes/theme-sakura/assets/images/themes/little-monster.png
               bg_img_strategy: none
               bg_icon: fa:optin-monster
               bg_night: false
               bg_isdefault: false
+              bg_blur: 5
+              rain_glass_blur: 0.3
             - bg_name: pixiv
               bg_url: /themes/theme-sakura/assets/images/themes/star02.png
               bg_img_strategy: none
               bg_icon: simple-icons:pixiv
               bg_night: false
               bg_isdefault: false
+              bg_blur: 5
+              rain_glass_blur: 0.3
             - bg_name: bing
               bg_url: https://api.1314.cool/bingimg/
               bg_img_strategy: cover
               bg_icon: jam:bing
               bg_night: false
               bg_isdefault: false
+              bg_blur: 3
+              rain_glass_blur: 0.25
             - bg_name: dark
               bg_url:
               bg_img_strategy: cover
               bg_icon: fa:moon-o
               bg_night: true
               bg_isdefault: false
+              bg_blur: 0
+              rain_glass_blur: 0.3
           children:
             - $formkit: text
               name: bg_name
@@ -957,6 +1009,22 @@ spec:
               label: 黑夜模式
               help: 开启后，当前主题被选中的同时也会进入黑夜模式
               value: false
+            - $formkit: number
+              name: bg_blur
+              label: 背景模糊程度
+              help: 设置背景的高斯模糊效果（0-20像素，0表示不模糊）
+              value: 0
+              min: 0
+              max: 20
+              step: 1
+            - $formkit: number
+              name: rain_glass_blur
+              label: 玻璃雨滴模糊强度
+              help: 雨滴效果开启时，玻璃折射的背景模糊程度（0.0-1.0，0为清晰，1为模糊，建议0.2-0.4）
+              value: 0.3
+              min: 0.0
+              max: 1.0
+              step: 0.1
             - $formkit: checkbox
               name: bg_isdefault
               label: 是否为默认主题

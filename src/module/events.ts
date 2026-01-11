@@ -420,11 +420,35 @@ export class Events {
       themeData = JSON.parse(localThemeData);
     }
     const bodyElement = document.querySelector("body") as HTMLBodyElement;
+    // 不再直接设置 body 的背景图，由雨滴效果渲染
+    // if (themeData?.bg_url) {
+    //   bodyElement.style.backgroundImage = `url(${themeData?.bg_url})`;
+    // } else {
+    //   bodyElement.style.backgroundImage = "";
+    // }
+    
+    // 将背景 URL 存储到 data 属性，供雨滴效果读取
     if (themeData?.bg_url) {
-      bodyElement.style.backgroundImage = `url(${themeData?.bg_url})`;
+      bodyElement.setAttribute('data-bg-url', themeData.bg_url);
     } else {
-      bodyElement.style.backgroundImage = "";
+      bodyElement.removeAttribute('data-bg-url');
     }
+    
+    // 将玻璃雨滴模糊强度存储到 data 属性
+    if (typeof themeData?.rain_glass_blur === 'number') {
+      bodyElement.setAttribute('data-rain-glass-blur', themeData.rain_glass_blur.toString());
+    } else {
+      bodyElement.removeAttribute('data-rain-glass-blur');
+    }
+    
+    // 背景固定、尺寸等配置已由雨滴效果处理
+    // 通过CSS自定义属性传递模糊值
+    if (themeData?.bg_blur) {
+      bodyElement.style.setProperty('--bg-blur', `${themeData.bg_blur}px`);
+    } else {
+      bodyElement.style.setProperty('--bg-blur', '0px');
+    }
+    
     if (themeData?.bg_night) {
       bodyElement.classList.add("dark");
     } else {
@@ -486,4 +510,6 @@ interface ThemeItemOptions {
   bg_icon: string;
   bg_night: boolean;
   bg_isdefault: boolean;
+  bg_blur?: number;
+  rain_glass_blur?: number;
 }

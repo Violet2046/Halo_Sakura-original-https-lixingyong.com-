@@ -32,10 +32,10 @@ textarea {
 
 body {
   background: var(--background-color);
-  background-attachment: fixed;
   margin: 0;
   cursor: var(--cursor-normal);
   text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1);
+  position: relative;
 
   &.serif {
     font-family: "Noto Serif SC", Georgia, serif;

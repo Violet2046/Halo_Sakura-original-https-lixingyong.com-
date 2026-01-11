@@ -1,5 +1,8 @@
 @import "loading.css";
 
+/* 雨滴效果 */
+@import "rain-effect.css";
+
 /* 分页 */
 @import "pagination";
 
