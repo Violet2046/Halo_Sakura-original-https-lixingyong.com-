@@ -8,26 +8,30 @@
     & .toc-container {
       max-width: 20rem;
       width: max-content;
-      max-height: calc(100vh - 8rem);
-      background-color: var(--site-content-background-color);
+      height: 100%;
       transform: translateX(0);
       position: absolute;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: var(--card-container-box-shadow);
+
 
       & .toc {
         overflow-y: auto;
         position: sticky;
         top: 6.25rem;
-        max-height: calc(100vh - 10rem);
+        height: fit-content;
         transition: background 1s;
+        background-color: var(--site-content-background-color);   
+        padding: 1rem;
+        border-radius: 8px;
 
         & > .toc-list {
           overflow: hidden;
           position: relative;
           margin: 0;
           padding-left: 10px;
+          
+          /* 防止列表项溢出 */
+          max-width: 100%;
+          box-sizing: border-box;
 
           & li {
             list-style: none;
