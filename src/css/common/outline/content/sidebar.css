@@ -2,19 +2,20 @@
   position: absolute;
   height: 100%;
   top: 0;
-  right: -20px;
+  right: 0px;
 
   & .sidebar-inner {
+    height: 100%;
     & .toc-container {
-      max-width: 20rem;
-      width: max-content;
+      width: auto;
       height: 100%;
-      transform: translateX(0);
       position: absolute;
+      left: 20px;
+      right: calc(-49.5vw + 420px);
 
 
       & .toc {
-        overflow-y: auto;
+        overflow-x: auto;
         position: sticky;
         top: 6.25rem;
         height: fit-content;
