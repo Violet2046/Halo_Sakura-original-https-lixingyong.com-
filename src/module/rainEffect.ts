@@ -168,8 +168,12 @@ class RainEffect {
     // 创建时钟
     this.clock = new THREE.Clock();
 
-    // 监听窗口大小变化
+    // 监听窗口大小变化和设备旋转
     window.addEventListener("resize", () => this.onResize());
+    window.addEventListener("orientationchange", () => {
+      // 设备旋转后延迟一点调整，确保布局已完成
+      setTimeout(() => this.onResize(), 100);
+    });
 
     console.log("Three.js glass rain effect initialized with background texture");
   }
@@ -180,8 +184,19 @@ class RainEffect {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
+    // 更新渲染器尺寸
     this.renderer.setSize(width, height);
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    
+    // 更新uniform分辨率
     this.material.uniforms.iResolution.value.set(width, height, 1.0);
+    
+    // 强制重新渲染一帧
+    if (this.scene && this.camera) {
+      this.renderer.render(this.scene, this.camera);
+    }
+    
+    console.log(`Rain effect: Resized to ${width}x${height}, pixelRatio=${window.devicePixelRatio}`);
   }
 
   private animate = (): void => {
